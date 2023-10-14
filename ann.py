@@ -34,40 +34,21 @@ class ANN:
     def mse_deriv(self, label, label_ind):
         return (label[label_ind] - self.layers[-1][label_ind].output) * -1
     
-    def cel(self, label):
-        sum = 0
-        for i in range(len(label)):
-            sum += -1 * (label[i] * math.log(self.layers[-1][i].output) + (1 - label[i]) * math.log(1 - self.layers[-1][i].output))
-        
-        return sum
-    
-    def cel_deriv(self, label, label_ind):
-        return self.layers[-1][label_ind].output - label[label_ind]
-    
     def cost(self, inputs, label):
         self.forward_pass(inputs)
         if self.costfunc == "mse":
             return self.mse(label)
-        if self.costfunc == "cel":
-            return self.cel(label)
     
     def cost_deriv(self, label, label_ind):
         if self.costfunc == "mse":
             return self.mse_deriv(label, label_ind)
-        if self.costfunc == "cel":
-            return self.cel_deriv(label, label_ind)
         
     def compute_output_delta(self, label):
         output_delta = []
-        if self.costfunc == "cel":
-            for i in range(len(label)):
-                output_deriv = self.cost_deriv(label, i)
-                output_delta.append(output_deriv)
-        else:
-            for i in range(len(label)):
-                output_deriv = self.cost_deriv(label, i)
-                self.layers[-1][i].activation_deriv()
-                output_delta.append(output_deriv * self.layers[-1][i].deriv)
+        for i in range(len(label)):
+            output_deriv = self.cost_deriv(label, i)
+            self.layers[-1][i].activation_deriv()
+            output_delta.append(output_deriv * self.layers[-1][i].deriv)
         
         return output_delta
 
@@ -123,7 +104,6 @@ if __name__ == "__main__":
     nn.layers[1][1].weights[0] = 0.50
     nn.layers[1][1].weights[1] = 0.55
     nn.layers[1][1].bias = 0.6
-    nn.costfunc = "mse"
 
     cost = nn.cost([0.05, 0.1], [0.01, 0.99])
     print(cost)
