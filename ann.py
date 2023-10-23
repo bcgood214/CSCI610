@@ -1,6 +1,8 @@
 import math, random
 from node import Node
 
+# TODO: add additional activation functions
+
 class ANN:
     def __init__(self, num_of_inputs, layers, default_activation="logistic"):
         self.costfunc = "mse"
@@ -32,6 +34,7 @@ class ANN:
         return sum
     
     def mse_deriv(self, label, label_ind):
+        # print(label_ind)
         return (label[label_ind] - self.layers[-1][label_ind].output) * -1
     
     def cost(self, inputs, label):
@@ -54,6 +57,7 @@ class ANN:
 
     
     def compute_delta(self, label):
+        # print(label)
         self.delta = []
         output_delta = self.compute_output_delta(label)
         self.delta.append(output_delta)
@@ -86,6 +90,7 @@ class ANN:
     def train(self, inputs, labels, epochs=100):
         for _ in range(epochs):
             for i in range(len(inputs)):
+                self.forward_pass(inputs[i])
                 self.backward_pass(inputs[i], labels[i])
 
 
