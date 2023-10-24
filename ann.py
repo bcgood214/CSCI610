@@ -26,6 +26,11 @@ class ANN:
                 outputs.append(neuron.output)
             values = outputs
     
+    def layer_activation(self, layer_ind, actfunc):
+        layer_len = len(self.layers[layer_ind])
+        for i in range(layer_len):
+            self.layers[layer_ind][i].activation = actfunc
+    
     def mse(self, label):
         sum = 0
         for i in range(len(label)):

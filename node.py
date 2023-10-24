@@ -17,6 +17,12 @@ class Node:
         
         self.net_input = sum + self.bias
     
+    def linear(self):
+        return self.net_input
+    
+    def linear_deriv(self):
+        return 1
+    
     def logistic(self):
         return 1/(1+math.exp(-1 * self.net_input))
     
@@ -26,10 +32,14 @@ class Node:
     def activate(self):
         if self.activation == "logistic":
             self.output = self.logistic()
+        if self.activation == "linear":
+            self.output = self.linear()
     
     def activation_deriv(self):
         if self.activation == "logistic":
             self.deriv = self.logistic_deriv()
+        if self.activation == "linear":
+            self.deriv = self.linear_deriv()
     
     def compute_weights(self, delta, inputs, lr):
         self.update_weights = []
