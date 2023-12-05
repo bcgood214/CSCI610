@@ -113,10 +113,13 @@ if __name__ == "__main__":
     nn.layers[1][1].weights[1] = 0.55
     nn.layers[1][1].bias = 0.6
 
+    ## Feel free to modify the epochs variable to see different results
+    epochs = 100
+
     cost = nn.cost([0.05, 0.1], [0.01, 0.99])
-    print(cost)
+    print(f"Cost before training: {cost}")
     inputs = [ [0.05, 0.1] ]
     labels = [ [0.01, 0.99] ]
-    nn.train(inputs, labels, epochs=1)
+    nn.train(inputs, labels, epochs=epochs)
     cost = nn.cost([0.05, 0.1], [0.01, 0.99])
-    print(cost)
+    print(f"Cost after training: {cost}")
