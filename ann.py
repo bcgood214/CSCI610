@@ -1,8 +1,6 @@
 import math, random
 from node import Node
 
-# TODO: add additional activation functions
-
 class ANN:
     def __init__(self, num_of_inputs, layers, default_activation="logistic"):
         self.costfunc = "mse"
