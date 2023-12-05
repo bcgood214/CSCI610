@@ -114,7 +114,7 @@ if __name__ == "__main__":
     nn.layers[1][1].bias = 0.6
 
     ## Feel free to modify the epochs variable to see different results
-    epochs = 100
+    epochs = 200
 
     cost = nn.cost([0.05, 0.1], [0.01, 0.99])
     print(f"Cost before training: {cost}")
